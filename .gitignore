@@ -14,6 +14,9 @@ local.properties
 .settings/
 .loadpath
 .recommenders
+.gradle/
+gradle/
+build/
 
 # External tool builders
 .externalToolBuilders/
@@ -62,7 +65,7 @@ local.properties
 
 # Uncomment this line if you wish to ignore the project description file.
 # Typically, this file would be tracked if it contains build/dependency configurations:
-#.project
+.project
 
 ### Eclipse Patch ###
 # Spring Boot Tooling
@@ -210,7 +213,7 @@ bower_components
 .lock-wscript
 
 # Compiled binary addons (https://nodejs.org/api/addons.html)
-build/Release
+#build/Release
 
 # Dependency directories
 node_modules/
@@ -298,6 +301,4 @@ dist/
 temp/
 
 # End of https://www.toptal.com/developers/gitignore/api/intellij,eclipse,node
-
-.gradle/
 build/
