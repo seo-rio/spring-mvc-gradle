@@ -10,9 +10,7 @@ public class MainController {
 
     @GetMapping(value = "/")
     public String main() {
-
         log.debug("TEST");
-
         return "index";
     }
 }
