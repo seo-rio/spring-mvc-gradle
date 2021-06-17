@@ -2,7 +2,8 @@ package spring.demo.common;
 
 public enum EnumReturnType {
 
-    DEFAULT("DEFAULT JSON");
+    DEFAULT("Default JSON"),
+    GRID("Grid JSON");
 
     private final String value;
 

@@ -4,15 +4,23 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import spring.demo.common.EnumResult;
 import spring.demo.common.EnumReturnType;
-import spring.demo.common.ResponseBodyResultModel;
+import spring.demo.common.DefaultResultModel;
+import spring.demo.common.GridResultModel;
+
+import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
 
 @Getter
+@Slf4j
 public class ResponseBuilder {
 
     private final ResponseEntity<Object> responseEntity;
@@ -44,28 +52,37 @@ public class ResponseBuilder {
         }
 
         public ResponseEntity<Object> build() {
-            return responseEntity;
+            return responseEntity == null ? setResponse(null) : responseEntity;
         }
 
         private ResponseEntity<Object> setResponse(Object body) {
             final String RESULT_CODE_NAME = "Server-Result-Code";
             final String RESULT_MESSAGE_NAME = "Server-Result-Message";
 
-//            if(this.responseType == null || this.responseType.equals(EnumReturnType.DEFAULT)){
-//
-//            }
+            if (this.responseType == null) {
+                this.responseType = EnumReturnType.DEFAULT;
+            }
+            Object bodyObject = null;
+
+            switch (this.responseType) {
+                case GRID:
+                    bodyObject = new GridResultModel(body, true);
+                    break;
+                default:
+                    bodyObject = new DefaultResultModel(body);
+            }
 
             ResponseEntity<Object> responseEntity = null;
 
-            MultiValueMap<String, String> header = new LinkedMultiValueMap<>();
-            header.add(RESULT_CODE_NAME, this.result.getCd());
-            header.add(RESULT_MESSAGE_NAME, this.result.getMsg());
+            Map<String, String> header = new HashMap<>();
+            header.put(RESULT_CODE_NAME, this.result.getCd());
+            header.put(RESULT_MESSAGE_NAME, this.result.getMsg());
 
             try {
                 if (body != null) {
-                    responseEntity = new ResponseEntity<Object>(setResponseBody(body), header, this.status); //header + body
+                    responseEntity = new ResponseEntity<Object>(setResponseBody(bodyObject), setHeader(header), this.status); //header + body
                 } else {
-                    responseEntity = new ResponseEntity<Object>(null, this.status); //header
+                    responseEntity = new ResponseEntity<Object>(setHeader(header), this.status); //header
                 }
             } catch (Exception e) {
                 responseEntity = new ResponseEntity<>(EnumResult.FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -77,6 +94,21 @@ public class ResponseBuilder {
             ObjectMapper mapper = new ObjectMapper();
             return String.valueOf(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(body));
         }
+
+        private HttpHeaders setHeader(Map<String, String> map) {
+
+            HttpHeaders headers = new HttpHeaders();
+
+            final Map<String, String> parameterMap = new HashMap<String, String>();
+            parameterMap.put("charset", StandardCharsets.UTF_8.name());
+            headers.setContentType(new MediaType("application", "json", parameterMap));
+
+            for (String key : map.keySet()) {
+                headers.set(key, String.valueOf(map.get(key)));
+            }
+            return headers;
+        }
+
     }
 
 }

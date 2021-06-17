@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="warn">
+<Configuration>
     <Properties>
-        <Property name="LOG_PATTERN">%style{[%d{yyyy-MM-dd HH:mm:ss}]}{cyan} %highlight{[%-5level]}{FATAL=bg_red, ERROR=red,
-            INFO=green, DEBUG=blue}  %style{[%t]}{yellow} [%C] - %m %n</Property>
+        <Property name="LOG_PATTERN">%style{[%d{yyyy-MM-dd HH:mm:ss:SSS}]}{cyan} %highlight{[%-5level]}{FATAL=bg_red, ERROR=red,
+            INFO=green, DEBUG=blue}  %style{[%t]}{yellow} [%50c{1.}] - %m %n</Property>
     </Properties>
 
     <!-- 콘솔 로그 설정 -->
     <Appenders>
         <Console name="CONSOLE" target="SYSTEM_OUT">
-            <PatternLayout pattern="${LOG_PATTERN}" charset="UTF-8"/>
+            <PatternLayout disableAnsi="false" pattern="${LOG_PATTERN}" charset="UTF-8"/>
         </Console>
     </Appenders>
 
@@ -16,6 +16,12 @@
         <logger name="spring.demo" level="debug" additivity="false">
             <appender-ref ref="CONSOLE"/>
         </logger>
+        <logger name="org.springframework" level="warn" additivity="false">
+            <appender-ref ref="CONSOLE"/>
+        </logger>
+<!--        <logger name="org.springframework.servlet.FrameworkServlet" level="debug" additivity="false">-->
+<!--            <appender-ref ref="CONSOLE"/>-->
+<!--        </logger>-->
         <root level="info">
             <AppenderRef ref="CONSOLE"/>
         </root>
