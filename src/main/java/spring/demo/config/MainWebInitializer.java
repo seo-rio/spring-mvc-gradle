@@ -24,14 +24,12 @@ public class MainWebInitializer implements WebApplicationInitializer {
         servlet.addMapping("/");
         servlet.setLoadOnStartup(1);
 
-
         // root-context 설정
         AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
         rootContext.register(RootConfiguration.class);
 
         ContextLoaderListener listener = new ContextLoaderListener(rootContext);
         servletContext.addListener(listener);
-
 
         // filter 설정
         FilterRegistration.Dynamic filter = servletContext.addFilter("encodingFilter", CharacterEncodingFilter.class);

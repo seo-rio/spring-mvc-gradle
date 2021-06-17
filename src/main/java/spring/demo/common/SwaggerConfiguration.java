@@ -19,7 +19,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 @ComponentScan("spring.demo.app")
 @PropertySource(value = "classpath:/application.properties", encoding = "UTF-8")
-public class SwaggerConfiguration extends WebMvcConfigurationSupport {
+public class SwaggerConfiguration {
 
     @Value("${spring.application.name}")
     private String applicationName;
@@ -42,11 +42,11 @@ public class SwaggerConfiguration extends WebMvcConfigurationSupport {
         return new ApiInfoBuilder().title(applicationName).description("Spring Demo Project").version(applicationVersion).build();
     }
 
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
-        registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
-    }
+//    @Override
+//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+//        registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
+//        registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
+//    }
 
 
 }

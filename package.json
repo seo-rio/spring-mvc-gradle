@@ -1,0 +1,45 @@
+{
+  "name": "spring-demo",
+  "version": "1.0.0",
+  "description": "Language \r - Java : OpenJDK 13",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "cross-env NODE_ENV=production webpack --progress",
+    "dev": "cross-env NODE_ENV=development webpack -w --devtool inline-source-map",
+    "start": "webpack-dev-server --progress"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seo-rio/spring-mvc-gradle.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/seo-rio/spring-mvc-gradle/issues"
+  },
+  "homepage": "https://github.com/seo-rio/spring-mvc-gradle#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.2.2",
+    "babel-preset-env": "^1.7.0",
+    "cross-env": "^7.0.3",
+    "css-loader": "^5.2.6",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^4.5.2",
+    "mini-css-extract-plugin": "^1.6.0",
+    "style-loader": "^2.0.0",
+    "url-loader": "^4.1.1",
+    "webpack": "^4.46.0",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.2"
+  },
+  "dependencies": {
+    "@babel/cli": "^7.14.3",
+    "@babel/core": "^7.14.3",
+    "@babel/plugin-transform-strict-mode": "^7.12.13",
+    "@babel/preset-env": "^7.14.2",
+    "clean-webpack-plugin": "^4.0.0-alpha.0",
+    "core-js": "^2.6.12"
+  }
+}
