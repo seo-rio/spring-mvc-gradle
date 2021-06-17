@@ -8,8 +8,8 @@ const mode = process.env.NODE_ENV || 'development'; // 기본값을 development�
 console.log(mode);
 
 module.exports = () => {
-    let clientPath = path.resolve(__dirname, 'src/main/webapp/resources/js');
-    let outputPath = path.resolve(__dirname, 'dist');
+    let clientPath = path.resolve(__dirname, 'src/main/webapp/client/js');
+    let outputPath = path.resolve(__dirname, mode === 'development' ? 'out' : 'src/main/webapp/resources/js');
 
     return {
         mode: mode,
@@ -21,7 +21,6 @@ module.exports = () => {
             filename: '[name].js'
         },
         devServer: {
-            overlay: true,
             contentBase: outputPath,
             publicPath: '/',
             host: '0.0.0.0',
@@ -29,9 +28,8 @@ module.exports = () => {
             proxy: {
                 '**': 'http://127.0.0.1:8080'
             },
-            stats: "errors-only",
             inline: true,
-            hot: true
+            hot: false
         },
         module: {
             rules: [
@@ -42,11 +40,12 @@ module.exports = () => {
                 },
                 {
                     test: /\.(css)$/,
-                    use: [{
-                        loader: MiniCssExtractPlugin.loader
-                    }, {
-                        loader: 'css-loader'
-                    }]
+                    use: [
+                        process.env.NODE_ENV === "production"
+                            ? MiniCssExtractPlugin.loader
+                            : "style-loader",
+                        "css-loader",
+                    ],
                 },
                 {
                     test: /\.(jpe?g|png|gif)$/i,
@@ -61,16 +60,16 @@ module.exports = () => {
         },
         plugins: [
             // new CleanWebpackPlugin({}),
-            new MiniCssExtractPlugin({
-                filename: '[name].css',
-            }),
-            // ...(process.env.NODE_ENV === 'production'
-            //     ? [
-            //         new MiniCssExtractPlugin({
-            //             filename: '[name].css',
-            //         }),
-            //     ]
-            //     : []),
+            // new MiniCssExtractPlugin({
+            //     filename: outputPath +'/[name].css',
+            // }),
+            ...(process.env.NODE_ENV === 'production'
+                ? [
+                    new MiniCssExtractPlugin({
+                        filename: 'src/main/webapp/resources/js/[name].css',
+                    }),
+                ]
+                : []),
         ]
     }
 }

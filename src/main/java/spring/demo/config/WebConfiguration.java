@@ -1,5 +1,6 @@
 package spring.demo.config;
 
+import lombok.extern.slf4j.Slf4j;
 import nz.net.ultraq.thymeleaf.LayoutDialect;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -19,6 +20,7 @@ import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
+@Slf4j
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = {"spring.demo"})
@@ -34,20 +36,30 @@ public class WebConfiguration implements WebMvcConfigurer, ApplicationContextAwa
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        String profile = System.getProperty("spring.profiles.active");
+        log.debug("Profile => {}", profile);
 
         // Static Resources 설정
-        registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
-        registry.addResourceHandler("/js/**").addResourceLocations("/resources/js/");
-        registry.addResourceHandler("/css/**").addResourceLocations("/resources/css/");
-        registry.addResourceHandler("/font/**").addResourceLocations("/resources/font/");
-        registry.addResourceHandler("/img/**").addResourceLocations("/resources/img/");
-        registry.addResourceHandler("/dist/**").addResourceLocations("/resources/dist/");
+        if(profile != null && profile.equals("dev")) { // 개발
+            registry.addResourceHandler("/client/**").addResourceLocations("/client/");
+            registry.addResourceHandler("/js/**").addResourceLocations("/client/js/");
+            registry.addResourceHandler("/css/**").addResourceLocations("/client/css/");
+            registry.addResourceHandler("/img/**").addResourceLocations("/client/img/");
+            registry.addResourceHandler("/font/**").addResourceLocations("/client/font/");
+        }else{ // 운영
+            registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+            registry.addResourceHandler("/js/**").addResourceLocations("/resources/js/");
+            registry.addResourceHandler("/css/**").addResourceLocations("/resources/css/");
+            registry.addResourceHandler("/img/**").addResourceLocations("/resources/img/");
+            registry.addResourceHandler("/font/**").addResourceLocations("/resources/font/");
+        }
+
         registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
 
     /**
-     Thymeleaf ViewResolver 설정
+     * Thymeleaf ViewResolver 설정
      */
     @Bean
     public ThymeleafViewResolver viewResolver() {
