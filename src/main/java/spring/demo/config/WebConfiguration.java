@@ -36,24 +36,12 @@ public class WebConfiguration implements WebMvcConfigurer, ApplicationContextAwa
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        String profile = System.getProperty("spring.profiles.active");
-        log.debug("Profile => {}", profile);
 
-        // Static Resources 설정
-        if(profile != null && profile.equals("dev")) { // 개발
-            registry.addResourceHandler("/client/**").addResourceLocations("/client/");
-            registry.addResourceHandler("/js/**").addResourceLocations("/client/js/");
-            registry.addResourceHandler("/css/**").addResourceLocations("/client/css/");
-            registry.addResourceHandler("/img/**").addResourceLocations("/client/img/");
-            registry.addResourceHandler("/font/**").addResourceLocations("/client/font/");
-        }else{ // 운영
-            registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
-            registry.addResourceHandler("/js/**").addResourceLocations("/resources/js/");
-            registry.addResourceHandler("/css/**").addResourceLocations("/resources/css/");
-            registry.addResourceHandler("/img/**").addResourceLocations("/resources/img/");
-            registry.addResourceHandler("/font/**").addResourceLocations("/resources/font/");
-        }
-
+        registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+        registry.addResourceHandler("/js/**").addResourceLocations("/resources/js/");
+        registry.addResourceHandler("/css/**").addResourceLocations("/resources/css/");
+        registry.addResourceHandler("/img/**").addResourceLocations("/resources/img/");
+        registry.addResourceHandler("/font/**").addResourceLocations("/resources/font/");
         registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
@@ -98,8 +86,4 @@ public class WebConfiguration implements WebMvcConfigurer, ApplicationContextAwa
         return new PropertySourcesPlaceholderConfigurer();
     }
 
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("index");
-    }
 }

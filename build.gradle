@@ -3,16 +3,35 @@ plugins {
     id 'war'
 }
 
+
 apply plugin: 'war'
 
 sourceCompatibility = 13
 
-group 'org.example'
-version '1.0-SNAPSHOT'
+group 'com.spring'
+version '1.0'
 
 repositories {
     mavenCentral()
 }
+
+// static resource 분리 task
+task resourcesZip(type: Zip) {
+    from 'src/main/webapp/resources'
+    include '*/*' //to include contents of a folder present inside Reports directory
+    archiveName 'resources.zip'
+    destinationDir(file('/build/libs/'))
+}
+
+ext.profile = (!project.hasProperty('profile') || !profile) ? 'local' : profile
+war {
+    println "current profile : ${profile}"
+    if("${profile}" == "prod"){
+        rootSpec.exclude('/resources/**')
+        war.finalizedBy(resourcesZip)
+    }
+}
+
 
 dependencies {
     testImplementation 'junit:junit:4.11'
@@ -50,10 +69,12 @@ dependencies {
     implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
     implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
 
-
-
 }
+
 
 test {
     useJUnitPlatform()
 }
+
+//문자 코드로 UTF-8을 지정
+[compileJava]*.options*.encoding = "UTF-8"

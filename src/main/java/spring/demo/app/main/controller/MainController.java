@@ -12,13 +12,14 @@ public class MainController {
     @GetMapping(value = "/")
     public String main(Model model) {
         log.debug("TEST");
+        System.out.println("???");
         model.addAttribute("message", "hi!");
         return "index";
     }
 
     @GetMapping(value = "/test")
     public String test(Model model) {
-        log.debug("TEST");
+        log.debug("TEST?");
         model.addAttribute("message", "hi!");
         return "test";
     }

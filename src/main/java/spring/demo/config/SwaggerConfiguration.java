@@ -1,5 +1,6 @@
-package spring.demo.common;
+package spring.demo.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -15,6 +16,7 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+@Slf4j
 @Configuration
 @EnableSwagger2
 @ComponentScan("spring.demo.app")
@@ -29,6 +31,8 @@ public class SwaggerConfiguration {
 
     @Bean
     public Docket api() {
+        log.debug("\t\t=== Spring Application Name => {}", applicationName);
+        log.debug("\t\t=== Spring Application Version => {}", applicationVersion);
         return new Docket(DocumentationType.SWAGGER_2)
                 .useDefaultResponseMessages(false)
                 .select()

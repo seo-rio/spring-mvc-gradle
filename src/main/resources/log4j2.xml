@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration>
     <Properties>
-        <Property name="LOG_PATTERN">%style{[%d{yyyy-MM-dd HH:mm:ss:SSS}]}{cyan} %highlight{[%-5level]}{FATAL=bg_red, ERROR=red,
+        <Property name="LOG_PATTERN">%style{[%d{yyyy-MM-dd HH:mm:ss}]}{cyan} %highlight{[%-5level]}{FATAL=bg_red, ERROR=red,
             INFO=green, DEBUG=blue}  %style{[%t]}{yellow} [%50c{1.}] - %m %n</Property>
     </Properties>
 
