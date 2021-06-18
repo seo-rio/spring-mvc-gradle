@@ -1,0 +1,28 @@
+{
+  "name": "spring-demo",
+  "version": "1.0.0",
+  "description": "Language \r - Java : OpenJDK 13",
+  "scripts": {
+    "babel": "babel src/main/webapp/resources/js -d src/main/webapp/transfile/ejs -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seo-rio/spring-mvc-gradle.git"
+  },
+  "author": "seo-rio",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/seo-rio/spring-mvc-gradle/issues"
+  },
+  "homepage": "https://github.com/seo-rio/spring-mvc-gradle#readme",
+  "dependencies": {
+    "@babel/cli": "^7.14.5",
+    "@babel/core": "^7.14.6",
+    "@babel/plugin-transform-strict-mode": "^7.14.5",
+    "@babel/preset-env": "^7.14.5"
+  },
+  "devDependencies": {
+    "@babel/plugin-transform-arrow-functions": "^7.14.5",
+    "@babel/plugin-transform-block-scoping": "^7.14.5"
+  }
+}
