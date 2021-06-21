@@ -22,7 +22,18 @@ public class MainRestController {
     })
     @GetMapping(value = "/api/test")
     public ResponseEntity<Object> test() {
-        log.debug("\t\t== TEST API IN ==\t\t");
+        log.debug("\t\t== TEST1 API IN ==\t\t");
         return new ResponseBuilder.Builder(HttpStatus.OK, EnumResult.SUCCESS).body("TEST1").build();
+    }
+
+    @ApiOperation(value = "TEST2 API", notes = "TEST2 API 입니다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공", response = String.class),
+            @ApiResponse(code = 500, message = "알수없는 에러")
+    })
+    @GetMapping(value = "/api/test2")
+    public ResponseEntity<Object> test2() {
+        log.debug("\t\t== TEST2 API IN ==\t\t");
+        return new ResponseBuilder.Builder(HttpStatus.OK, EnumResult.SUCCESS).body("TEST2").build();
     }
 }

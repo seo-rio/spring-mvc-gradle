@@ -69,7 +69,7 @@ public class ResponseBuilder {
                     bodyObject = new GridResultModel(body, true);
                     break;
                 default:
-                    bodyObject = new DefaultResultModel(body);
+                    bodyObject = body;
             }
 
             ResponseEntity<Object> responseEntity = null;

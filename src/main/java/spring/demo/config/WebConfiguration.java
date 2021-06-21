@@ -38,8 +38,7 @@ public class WebConfiguration implements WebMvcConfigurer, ApplicationContextAwa
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
 
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
-        registry.addResourceHandler("/transfile/**").addResourceLocations("/transfile/");
-        registry.addResourceHandler("/ejs/**").addResourceLocations("/transfile/ejs/");
+        registry.addResourceHandler("/ejs/**").addResourceLocations("/resources/ejs/");
         registry.addResourceHandler("/js/**").addResourceLocations("/resources/js/");
         registry.addResourceHandler("/lib/**").addResourceLocations("/resources/lib/");
         registry.addResourceHandler("/css/**").addResourceLocations("/resources/css/");

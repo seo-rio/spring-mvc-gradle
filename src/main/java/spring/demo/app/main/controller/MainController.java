@@ -14,13 +14,13 @@ public class MainController {
         log.debug("TEST");
         System.out.println("???");
         model.addAttribute("message", "hi!");
-        return "index";
+        return "main/index";
     }
 
     @GetMapping(value = "/test")
     public String test(Model model) {
         log.debug("TEST?");
         model.addAttribute("message", "hi!");
-        return "test";
+        return "test/test";
     }
 }
