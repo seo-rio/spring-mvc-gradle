@@ -12,6 +12,9 @@ Template Engine
 - Thymeleaf : 3.0.11.RELEASE
 - Thymeleaf-layout : 2.3.0
 
+API Doc
+- Swagger : 2.9.2
+
 ### Node
 Webpack
 - webpack : 4.46.0
