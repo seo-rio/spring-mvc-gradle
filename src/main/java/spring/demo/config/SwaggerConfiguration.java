@@ -31,8 +31,6 @@ public class SwaggerConfiguration {
 
     @Bean
     public Docket api() {
-        log.debug("\t\t=== Spring Application Name => {}", applicationName);
-        log.debug("\t\t=== Spring Application Version => {}", applicationVersion);
         return new Docket(DocumentationType.SWAGGER_2)
                 .useDefaultResponseMessages(false)
                 .select()
