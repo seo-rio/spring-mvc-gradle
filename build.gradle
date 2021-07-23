@@ -1,0 +1,80 @@
+plugins {
+    id 'java'
+    id 'war'
+}
+
+
+apply plugin: 'war'
+
+sourceCompatibility = 13
+
+group 'com.spring'
+version '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+// static resource 분리 task
+task resourcesZip(type: Zip) {
+    from 'src/main/webapp/resources'
+    include '*/*' //to include contents of a folder present inside Reports directory
+    archiveName 'resources.zip'
+    destinationDir(file('/build/libs/'))
+}
+
+ext.profile = (!project.hasProperty('profile') || !profile) ? 'local' : profile
+war {
+    println "current profile : ${profile}"
+    if("${profile}" == "prod"){
+        rootSpec.exclude('/resources/**')
+        war.finalizedBy(resourcesZip)
+    }
+}
+
+
+dependencies {
+    testImplementation 'junit:junit:4.11'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+
+    // Lombok
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.12'
+    annotationProcessor 'org.projectlombok:lombok:1.18.12'
+
+    // Spring-mvc
+    compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
+    compile 'org.springframework:spring-webmvc:5.0.8.RELEASE'
+
+    // Log
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
+    implementation group: 'org.slf4j', name: 'log4j-over-slf4j', version: '1.7.25'
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.12.1'
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.12.1'
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: '2.12.1'
+
+    // Thymeleaf
+    implementation group: 'org.thymeleaf', name: 'thymeleaf', version: '3.0.11.RELEASE'
+    implementation group: 'org.thymeleaf', name: 'thymeleaf-spring5', version: '3.0.11.RELEASE'
+    implementation group: 'nz.net.ultraq.thymeleaf', name: 'thymeleaf-layout-dialect', version: '2.3.0'
+
+    // Jackson
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.1'
+
+    // Apache-commons
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: "3.11"
+    compile group: 'commons-beanutils', name: 'commons-beanutils', version: "1.9.4"
+
+    // Swagger
+    implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+    implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+
+}
+
+
+test {
+    useJUnitPlatform()
+}
+
+//문자 코드로 UTF-8을 지정
+[compileJava]*.options*.encoding = "UTF-8"
