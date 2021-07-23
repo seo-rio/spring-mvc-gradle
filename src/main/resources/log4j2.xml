@@ -2,7 +2,7 @@
 <Configuration>
     <Properties>
         <Property name="LOG_PATTERN">%style{[%d{yyyy-MM-dd HH:mm:ss}]}{cyan} %highlight{[%-5level]}{FATAL=bg_red, ERROR=red,
-            INFO=green, DEBUG=blue}  %style{[%t]}{yellow} [%50c{1.}] - %m %n</Property>
+            INFO=green, DEBUG=blue}  %style{[%-22t]}{yellow} [%50c{1.}] - %m %n</Property>
     </Properties>
 
     <!-- 콘솔 로그 설정 -->
@@ -19,11 +19,21 @@
         <logger name="org.springframework" level="warn" additivity="false">
             <appender-ref ref="CONSOLE"/>
         </logger>
-<!--        <logger name="org.springframework.servlet.FrameworkServlet" level="debug" additivity="false">-->
-<!--            <appender-ref ref="CONSOLE"/>-->
-<!--        </logger>-->
+
+        <logger name="jdbc" level="OFF" />
+        <logger name="jdbc.resultset" level="OFF" />
+        <logger name="jdbc.connection" level="OFF" />
+        <logger name="jdbc.audit" level="OFF" />
+        <logger name="jdbc.sqltiming" level="OFF" />
+
+        <logger name="jdbc.sqlonly" level="info" additivity="false">
+            <appender-ref ref="CONSOLE" />
+        </logger>
+        <logger name="jdbc.resultsettable" level="info" additivity="false">
+            <appender-ref ref="CONSOLE" />
+        </logger>
         <root level="info">
             <AppenderRef ref="CONSOLE"/>
-        </root>
+        </root>]
     </Loggers>
 </Configuration>

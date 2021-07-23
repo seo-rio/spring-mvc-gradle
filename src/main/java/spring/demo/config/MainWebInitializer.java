@@ -8,6 +8,7 @@ import org.springframework.web.servlet.DispatcherServlet;
 
 import javax.servlet.*;
 import java.util.EnumSet;
+import spring.demo.common.filter.ReadableRequestWrapperFilter;
 
 public class MainWebInitializer implements WebApplicationInitializer {
     @Override
@@ -30,11 +31,15 @@ public class MainWebInitializer implements WebApplicationInitializer {
 
         ContextLoaderListener listener = new ContextLoaderListener(rootContext);
         servletContext.addListener(listener);
+        servletContext.addListener(new SessionListener());
 
         // filter 설정
         FilterRegistration.Dynamic filter = servletContext.addFilter("encodingFilter", CharacterEncodingFilter.class);
         filter.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
         filter.setInitParameter("encoding", "UTF-8");
         filter.setInitParameter("forceEncoding", "true");
+
+        FilterRegistration.Dynamic readableRequestWrapperFilter = servletContext.addFilter("ReadableRequestWrapperFilter", ReadableRequestWrapperFilter.class);
+        readableRequestWrapperFilter.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
     }
 }
